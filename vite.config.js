@@ -12,6 +12,10 @@ function serveKitFiles() {
       path: resolve("docs/ANDROID-TV-APK.md"),
       type: "text/markdown; charset=utf-8",
     },
+    "/docs/GITHUB-UPLOAD.md": {
+      path: resolve("docs/GITHUB-UPLOAD.md"),
+      type: "text/markdown; charset=utf-8",
+    },
   };
 
   const middleware = (req, res, next) => {

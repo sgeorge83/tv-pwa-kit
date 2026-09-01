@@ -1,0 +1,50 @@
+# Deploy to GitHub Pages
+
+# This workflow publishes the static PWA (no Vite build required).
+# One-time: repo Settings → Pages → Source → GitHub Actions.
+
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stage static site
+        run: |
+          mkdir -p _site/.well-known _site/assets _site/usb _site/docs
+          cp index.html kit.html style.css script.js manifest.json sw.js sw-register.js \
+            favicon.png icon.png icon1.png screenshot-wide.png screenshot-mobile.png _site/
+          cp -r assets/. _site/assets/
+          cp usb/launch.html _site/launch.html
+          cp usb/launch.html usb/README-USB.txt _site/usb/
+          cp docs/ANDROID-TV-APK.md docs/GITHUB-UPLOAD.md _site/docs/
+          cp .well-known/assetlinks.json _site/.well-known/
+          touch _site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

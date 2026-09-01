@@ -1,12 +1,14 @@
 # Package Verse of the Day as an Android TV / Fire TV APK
 
-The live PWA is already on GitHub Pages:
+The live PWA, after you enable GitHub Pages on this repo, is:
 
-**https://sgeorge83.github.io/bible-daily-pwa/**
+**https://sgeorge83.github.io/tv-pwa-kit/**
 
-This guide turns that URL into a signed `.apk` you copy onto a USB flash drive and install on an Android TV box or Fire TV stick. The wrapper is a Trusted Web Activity (TWA): no browser chrome, landscape lock, and the same web app you already host.
+If you named the GitHub repo something else, use `https://sgeorge83.github.io/<repo>/` everywhere below.
 
-Do this **after** `manifest.json`, `sw.js`, and `sw-register.js` from this kit are live on GitHub Pages. PWABuilder reads the published manifest.
+This guide turns that URL into a signed `.apk` you copy onto a USB flash drive and install on an Android TV box or Fire TV stick. The wrapper is a Trusted Web Activity (TWA): no browser chrome, landscape lock, and the same web app GitHub Pages hosts.
+
+Do this **after** Pages is serving `manifest.json` and `sw.js`. PWABuilder reads the published manifest.
 
 ## Before you start
 
@@ -23,7 +25,7 @@ Sideloading does **not** require a Google Play developer account. Keep the signi
 ## Path A — PWABuilder (easiest)
 
 1. Open [https://www.pwabuilder.com](https://www.pwabuilder.com).
-2. Paste `https://sgeorge83.github.io/bible-daily-pwa/` and start the scan.
+2. Paste `https://sgeorge83.github.io/tv-pwa-kit/` and start the scan.
 3. Choose **Package for stores**, then **Generate Package** under Android.
 4. Stay on the **Google Play** tab and set:
 
@@ -33,11 +35,11 @@ Sideloading does **not** require a Google Play developer account. Keep the signi
    | App name | `Verse of the Day` |
    | Short name | `Verse of the Day` |
    | Host | `sgeorge83.github.io` |
-   | Start URL | `/bible-daily-pwa/` |
-   | Manifest URL | `https://sgeorge83.github.io/bible-daily-pwa/manifest.json` |
+   | Start URL | `/tv-pwa-kit/` |
+   | Manifest URL | `https://sgeorge83.github.io/tv-pwa-kit/manifest.json` |
    | Display mode | **Fullscreen** (hides the address bar and system bars) |
    | Theme / background / nav colors | `#060b14` |
-   | Icon URL | `https://sgeorge83.github.io/bible-daily-pwa/icon.png` |
+   | Icon URL | `https://sgeorge83.github.io/tv-pwa-kit/icon.png` |
    | Include source code | **On** (needed for the TV launcher patch) |
    | Signing key | **New** for a first sideload |
    | Notification / location / Play billing | Off |
@@ -63,7 +65,7 @@ Same TWA under the hood, useful if you already have a JDK / Android SDK.
 
 ```bash
 npm i -g @bubblewrap/cli
-bubblewrap init --manifest https://sgeorge83.github.io/bible-daily-pwa/manifest.json
+bubblewrap init --manifest https://sgeorge83.github.io/tv-pwa-kit/manifest.json
 ```
 
 When prompted:
@@ -73,7 +75,7 @@ When prompted:
 - Display: `fullscreen`
 - Orientation: `landscape`
 - Host: `sgeorge83.github.io`
-- Start URL: `/bible-daily-pwa/`
+- Start URL: `/tv-pwa-kit/`
 - Theme color: `#060b14`
 
 Then:

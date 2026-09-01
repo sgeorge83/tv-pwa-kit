@@ -1,0 +1,52 @@
+{
+  "id": "./",
+  "name": "WordOnAir Labs — Verse of the Day",
+  "short_name": "Verse of the Day",
+  "description": "A fullscreen daily Scripture display from WordOnAir Labs. Open on a TV, tablet, or phone.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "dir": "ltr",
+  "lang": "en",
+  "background_color": "#060b14",
+  "theme_color": "#060b14",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    {
+      "src": "icon1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Verse of the Day on a widescreen display"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Verse of the Day on a phone"
+    }
+  ]
+}

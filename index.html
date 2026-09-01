@@ -1,95 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#060b14" />
-    <title>Verse of the Day · TV & USB kit</title>
-    <meta
-      name="description"
-      content="USB launcher and Android TV APK packaging kit for the WordOnAir Labs Verse of the Day PWA."
-    />
-  </head>
-  <body>
-    <div class="offline-banner" id="offline-banner" role="status">
-      This computer is offline. The USB launcher and APK still need Wi-Fi on the TV to load today’s verse from GitHub Pages.
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Verse of the Day">
+    <meta name="theme-color" content="#060b14">
+    <meta name="description" content="Verse of the Day — a fullscreen Scripture display from WordOnAir Labs.">
+
+    <title>Verse of the Day · WordOnAir Labs</title>
+
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="apple-touch-icon" href="./icon1.png">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+    <div class="ambient" aria-hidden="true">
+        <div class="glow glow-teal"></div>
+        <div class="glow glow-gold"></div>
+        <div class="glow glow-purple"></div>
+        <div class="grain"></div>
+        <div class="particles">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
     </div>
 
-    <header class="hero">
-      <p class="kicker">WordOnAir Labs</p>
-      <h1>Put Verse of the Day on a TV</h1>
-      <p class="lede">
-        This kit packages the live GitHub Pages PWA
-        (<a href="https://sgeorge83.github.io/bible-daily-pwa/">sgeorge83.github.io/bible-daily-pwa</a>)
-        for a USB stick and for Android TV / Fire TV. Copy the drop-in PWA files into the existing repo, then pick a launch path.
-      </p>
-      <div class="actions">
-        <a class="btn btn-gold" href="/launch.html?preview=1">Preview USB splash</a>
-        <a class="btn btn-ghost" href="/launch.html">Open live launcher</a>
-        <a class="btn btn-ghost" href="https://github.com/sgeorge83/bible-daily-pwa">Open the PWA repo</a>
-      </div>
-    </header>
+    <div class="screen">
+        <div class="bezel" aria-hidden="true">
+            <i class="corner tl"></i>
+            <i class="corner tr"></i>
+            <i class="corner bl"></i>
+            <i class="corner br"></i>
+        </div>
 
-    <section class="section">
-      <div class="grid">
-        <article class="card">
-          <h2>USB launcher</h2>
-          <p>
-            Copy <span class="path">usb/launch.html</span> to the root of a FAT32 flash drive. Open it from a computer on HDMI, or any browser that can read USB files. Online, it sends the display to GitHub Pages. Offline, it stays on a full-screen fallback until Wi-Fi returns.
-          </p>
-          <p>
-            Most Android TV file managers will not run HTML. Use the APK path for a native TV app.
-          </p>
-        </article>
-        <article class="card">
-          <h2>Android TV APK</h2>
-          <p>
-            Package the live PWA URL with PWABuilder or Bubblewrap, lock landscape and fullscreen, copy <span class="path">VerseOfTheDay.apk</span> onto the same stick, and sideload it from the TV’s file manager.
-          </p>
-          <p>
-            Step-by-step after the PWA files are live:
-            <a href="/docs/ANDROID-TV-APK.md">docs/ANDROID-TV-APK.md</a>.
-          </p>
-        </article>
-      </div>
-    </section>
+        <a class="brand" href="https://wordonair.com" target="_blank" rel="noopener noreferrer">
+            <img class="brand-mark" src="./icon.png" alt="WordOnAir">
+        </a>
+        <time id="clock" datetime=""></time>
 
-    <section class="section">
-      <h2>USB launcher preview</h2>
-      <p class="lede">
-        Preview mode pauses the redirect so you can see the splash. The file on the stick has no query string and will open the live PWA when Wi-Fi is up.
-      </p>
-      <div class="preview-wrap">
-        <iframe
-          id="launcher-preview"
-          title="USB launcher splash"
-          src="/launch.html?preview=1"
-        ></iframe>
-        <p class="preview-error" id="preview-error">
-          The launcher preview did not load. Use “Preview USB splash” above, or open <span class="path">usb/launch.html</span> from the repo.
-        </p>
-      </div>
-    </section>
+        <main class="stage" id="stage">
+            <div class="stage-inner" id="stage-inner">
+                <div class="cross-wrap" aria-hidden="true">
+                    <svg class="cross" viewBox="0 0 48 72" fill="none">
+                        <defs>
+                            <linearGradient id="crossGold" x1="24" y1="0" x2="24" y2="72">
+                                <stop offset="0%" stop-color="#e8c96a"/>
+                                <stop offset="100%" stop-color="#c9a84c"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#crossGold)" d="M21.2 2.2h5.6c.8 0 1.4.6 1.4 1.4V22h16.2c.8 0 1.4.6 1.4 1.4v5.2c0 .8-.6 1.4-1.4 1.4H28.2V60.4c0 2.4-1.1 5.2-2.8 8.1-.5.8-1.9.8-2.4 0-1.7-2.9-2.8-5.7-2.8-8.1V30H7c-.8 0-1.4-.6-1.4-1.4v-5.2C5.6 22.6 6.2 22 7 22h14.2V3.6c0-.8.6-1.4 1.4-1.4Z"/>
+                    </svg>
+                </div>
 
-    <section class="section">
-      <h2>Copy into the GitHub Pages repo</h2>
-      <ol>
-        <li>Copy <span class="path">pwa/manifest.json</span> over <span class="path">manifest.json</span>.</li>
-        <li>Copy <span class="path">pwa/sw.js</span> and <span class="path">pwa/sw-register.js</span> into the repo root.</li>
-        <li>
-          In <span class="path">index.html</span>, add this before <span class="path">&lt;/body&gt;</span>:
-          <pre>&lt;script src="./sw-register.js" defer&gt;&lt;/script&gt;</pre>
-        </li>
-        <li>Push to <span class="path">main</span> so GitHub Pages publishes the service worker.</li>
-        <li>Then generate the APK from the live URL. See <a href="/docs/ANDROID-TV-APK.md">docs/ANDROID-TV-APK.md</a>.</li>
-      </ol>
-    </section>
+                <p class="kicker">Verse of the Day</p>
+                <time id="date" class="date" datetime=""></time>
 
-    <footer class="section">
-      Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), copyright © Crossway.
-      A project of WordOnAir Labs.
-    </footer>
+                <p id="status" class="status">Receiving today’s verse…</p>
 
-    <script type="module" src="/src/main.js"></script>
-  </body>
+                <blockquote id="verse" class="verse hidden"></blockquote>
+                <p id="reference" class="reference hidden"></p>
+
+                <div id="insight-block" class="insight-block hidden">
+                    <p class="insight-title">Verse insight</p>
+                    <p id="simplifier" class="insight"></p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="colophon">
+            <p class="colophon-brand">WordOnAir Labs</p>
+            <p class="disclaimer">
+                Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), copyright © Crossway.
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js?v=3" defer></script>
+    <script src="./sw-register.js" defer></script>
+</body>
 </html>
