@@ -21,10 +21,10 @@ Daily verse text still comes from `https://bible-widget-backend.vercel.app/api/m
 
 ## GitHub (required)
 
-This coding session cannot push to github.com — it has no access to your GitHub account. Create **https://github.com/sgeorge83/tv-pwa-kit** yourself and upload the files as described in [docs/GITHUB-UPLOAD.md](docs/GITHUB-UPLOAD.md). Then:
+This coding session cannot enable GitHub Pages for you. Create **https://github.com/sgeorge83/tv-pwa-kit** (already done) and:
 
-1. **Settings → Pages → Source → GitHub Actions**
-2. Wait for the **Deploy GitHub Pages** workflow
+1. **Settings → Pages → Source → GitHub Actions** (required; the workflow fails with “Get Pages site failed” until this is set)
+2. Re-run **Deploy GitHub Pages** on the Actions tab
 3. Open https://sgeorge83.github.io/tv-pwa-kit/
 
 ## USB flash drive

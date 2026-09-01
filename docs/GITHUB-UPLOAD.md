@@ -49,14 +49,15 @@ README.md
 
 Windows File Explorer: open the cloned/copied project folder, select the files listed above, drag them onto the GitHub tab. To upload `.github`, drag the `.github` folder itself.
 
-## 3. Turn on GitHub Pages
+## 3. Turn on GitHub Pages (required before the workflow can succeed)
 
-1. Open **Settings → Pages**.
-2. Under **Build and deployment → Source**, choose **GitHub Actions**.
-3. Open the **Actions** tab and wait for **Deploy GitHub Pages** to finish (green check).
-4. Live site: **https://sgeorge83.github.io/tv-pwa-kit/**
+The first Actions run always fails with **Get Pages site failed** until Pages is enabled. The default `GITHUB_TOKEN` cannot create a Pages site.
 
-If the first workflow failed with “Get Pages site failed”, enable Pages (step 2) and re-run the job.
+1. Open **https://github.com/sgeorge83/tv-pwa-kit/settings/pages**
+2. Under **Build and deployment → Source**, choose **GitHub Actions** (not “Deploy from a branch”).
+3. Save.
+4. Open **https://github.com/sgeorge83/tv-pwa-kit/actions**, select the failed **Deploy GitHub Pages** run, and click **Re-run all jobs** (or push any commit).
+5. When it is green, the live site is **https://sgeorge83.github.io/tv-pwa-kit/**
 
 ## 4. USB stick
 

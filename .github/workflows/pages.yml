@@ -1,7 +1,8 @@
-# Deploy to GitHub Pages
-
-# This workflow publishes the static PWA (no Vite build required).
-# One-time: repo Settings → Pages → Source → GitHub Actions.
+# Deploy to GitHub Pages (static PWA, no Vite build).
+#
+# First run fails until Pages is enabled (the default GITHUB_TOKEN cannot
+# create a Pages site). In the repo: Settings → Pages → Source → GitHub Actions.
+# Then re-run this workflow from the Actions tab.
 
 name: Deploy GitHub Pages
 
@@ -26,7 +27,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Stage static site
         run: |
@@ -40,11 +41,12 @@ jobs:
           cp .well-known/assetlinks.json _site/.well-known/
           touch _site/.nojekyll
 
-      - uses: actions/configure-pages@v5
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
