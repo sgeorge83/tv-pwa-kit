@@ -23,8 +23,8 @@ Daily verse text still comes from `https://bible-widget-backend.vercel.app/api/m
 
 This coding session cannot enable GitHub Pages for you. Create **https://github.com/sgeorge83/tv-pwa-kit** (already done) and:
 
-1. **Settings → Pages → Source → GitHub Actions** (required; the workflow fails with “Get Pages site failed” until this is set)
-2. Re-run **Deploy GitHub Pages** on the Actions tab
+1. **Settings → Pages → Source → Deploy from a branch → `gh-pages` / `/ (root)` → Save**
+2. Wait about a minute
 3. Open https://sgeorge83.github.io/tv-pwa-kit/
 
 ## USB flash drive

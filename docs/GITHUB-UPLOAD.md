@@ -49,15 +49,16 @@ README.md
 
 Windows File Explorer: open the cloned/copied project folder, select the files listed above, drag them onto the GitHub tab. To upload `.github`, drag the `.github` folder itself.
 
-## 3. Turn on GitHub Pages (required before the workflow can succeed)
+## 3. Turn on GitHub Pages (one setting, then it stays on)
 
-The first Actions run always fails with **Get Pages site failed** until Pages is enabled. The default `GITHUB_TOKEN` cannot create a Pages site.
+The Actions job no longer talks to the Pages API, so it should go green even before this step. The **site URL** stays 404 until you point Pages at the `gh-pages` branch:
 
 1. Open **https://github.com/sgeorge83/tv-pwa-kit/settings/pages**
-2. Under **Build and deployment → Source**, choose **GitHub Actions** (not “Deploy from a branch”).
-3. Save.
-4. Open **https://github.com/sgeorge83/tv-pwa-kit/actions**, select the failed **Deploy GitHub Pages** run, and click **Re-run all jobs** (or push any commit).
-5. When it is green, the live site is **https://sgeorge83.github.io/tv-pwa-kit/**
+2. **Build and deployment → Source** → **Deploy from a branch** (not GitHub Actions)
+3. **Branch** → **gh-pages**
+4. Folder → **/ (root)**
+5. Click **Save**
+6. Wait about a minute, then open **https://sgeorge83.github.io/tv-pwa-kit/**
 
 ## 4. USB stick
 

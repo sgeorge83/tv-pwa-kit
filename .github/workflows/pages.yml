@@ -1,8 +1,7 @@
-# Deploy to GitHub Pages (static PWA, no Vite build).
-#
-# First run fails until Pages is enabled (the default GITHUB_TOKEN cannot
-# create a Pages site). In the repo: Settings → Pages → Source → GitHub Actions.
-# Then re-run this workflow from the Actions tab.
+# Publish the static PWA to the gh-pages branch.
+# This does not use actions/configure-pages (that API 404s until Pages is
+# turned on). After the gh-pages branch exists:
+#   Settings → Pages → Source: Deploy from a branch → gh-pages → / (root)
 
 name: Deploy GitHub Pages
 
@@ -12,19 +11,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -41,12 +35,16 @@ jobs:
           cp .well-known/assetlinks.json _site/.well-known/
           touch _site/.nojekyll
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v6
-
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: _site
-
-      - id: deployment
-        uses: actions/deploy-pages@v5
+      - name: Push gh-pages branch
+        working-directory: _site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git init
+          git checkout -B gh-pages
+          git add -A
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Deploy site from ${GITHUB_SHA}"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin gh-pages
