@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#060b14" />
+    <title>TV & USB kit · Verse of the Day</title>
+    <meta
+      name="description"
+      content="Put Verse of the Day on a USB stick or Android TV. Hosted on GitHub Pages."
+    />
+    <style>
+      :root {
+        --navy: #060b14;
+        --navy-2: #0c1524;
+        --gold: #e8c96a;
+        --gold-deep: #c9a84c;
+        --teal: #3d8b8c;
+        --ink: #e8eef8;
+        --muted: #9aa8bd;
+        --line: rgba(232, 201, 106, 0.22);
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--navy);
+        color: var(--ink);
+        font-family: system-ui, "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+      a { color: var(--gold); }
+      a:focus-visible, button:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 3px;
+      }
+      .offline-banner {
+        display: none;
+        background: #3a1c1c;
+        color: #f0c4c4;
+        text-align: center;
+        padding: 0.7rem 1rem;
+        font-size: 0.92rem;
+      }
+      .offline-banner.is-on { display: block; }
+      .hero, .section {
+        width: min(1100px, calc(100% - 2rem));
+        margin: 0 auto;
+      }
+      .hero { padding: 3.5rem 0 2rem; }
+      .kicker {
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        font-size: 0.75rem;
+        margin: 0 0 0.75rem;
+      }
+      h1, h2 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      h1 { font-size: clamp(2rem, 5vw, 3.4rem); margin: 0 0 0.8rem; }
+      h2 { font-size: 1.6rem; margin: 0 0 0.8rem; }
+      .lede {
+        max-width: 42rem;
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin: 0 0 1.5rem;
+      }
+      .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-radius: 999px;
+        padding: 0.8rem 1.2rem;
+        font-weight: 600;
+        font-size: 0.92rem;
+      }
+      .btn-gold { background: var(--gold); color: var(--navy); }
+      .btn-ghost { border: 1px solid var(--gold-deep); color: var(--gold); }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        padding-bottom: 2rem;
+      }
+      .card {
+        background: var(--navy-2);
+        border: 1px solid var(--line);
+        border-radius: 1.1rem;
+        padding: 1.4rem;
+      }
+      .card p { color: var(--muted); }
+      .path {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.86em;
+        color: var(--gold);
+      }
+      ol { padding-left: 1.2rem; }
+      .section { padding-bottom: 2.5rem; }
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 1.5rem 0 2.5rem;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      @media (max-width: 800px) {
+        .grid { grid-template-columns: 1fr; }
+        .hero { padding-top: 2rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="offline-banner" id="offline-banner" role="status">
+      This computer is offline. GitHub Pages and today’s verse still need Wi-Fi on the TV.
+    </div>
+
+    <header class="hero">
+      <p class="kicker">WordOnAir Labs · GitHub only</p>
+      <h1>Verse of the Day on GitHub Pages</h1>
+      <p class="lede">
+        This whole project lives in one GitHub repository. After you upload it and turn on Pages, the live display is
+        <a href="https://sgeorge83.github.io/tv-pwa-kit/">sgeorge83.github.io/tv-pwa-kit</a>
+        (change the repo name in <span class="path">usb/launch.html</span> if you pick a different name). No WSL. No Origin CLI.
+      </p>
+      <div class="actions">
+        <a class="btn btn-gold" href="./index.html">Open the verse display</a>
+        <a class="btn btn-ghost" href="./launch.html?preview=1">USB splash</a>
+        <a class="btn btn-ghost" href="./docs/ANDROID-TV-APK.md">APK guide</a>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="grid">
+        <article class="card">
+          <h2>Put it on GitHub</h2>
+          <p>
+            Create an empty repo named <span class="path">tv-pwa-kit</span> at github.com, then drag these folders and files into <strong>Add file → Upload files</strong>. Skip <span class="path">node_modules</span>. Steps are in <span class="path">docs/GITHUB-UPLOAD.md</span>.
+          </p>
+        </article>
+        <article class="card">
+          <h2>USB and Android TV</h2>
+          <p>
+            Copy <span class="path">usb/launch.html</span> to a FAT32 stick. Package
+            <span class="path">https://sgeorge83.github.io/tv-pwa-kit/</span>
+            with PWABuilder for a sideload APK. Details in the APK guide.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>What this repo is</h2>
+      <ol>
+        <li>The verse PWA at the site root (<span class="path">index.html</span>, service worker, manifest).</li>
+        <li>USB launcher in <span class="path">usb/</span>.</li>
+        <li>Android TV APK instructions in <span class="path">docs/</span>.</li>
+      </ol>
+    </section>
+
+    <footer class="section">
+      Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), copyright © Crossway.
+      A project of WordOnAir Labs.
+    </footer>
+
+    <script>
+      (function () {
+        var banner = document.getElementById("offline-banner");
+        function sync() {
+          if (banner) banner.classList.toggle("is-on", navigator.onLine === false);
+        }
+        window.addEventListener("online", sync);
+        window.addEventListener("offline", sync);
+        sync();
+      })();
+    </script>
+  </body>
+</html>

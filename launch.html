@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#060b14">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Verse of the Day · WordOnAir Labs</title>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=https://sgeorge83.github.io/tv-pwa-kit/">
+  </noscript>
+  <style>
+    :root {
+      --navy: #060b14;
+      --gold: #e8c96a;
+      --gold-deep: #c9a84c;
+      --teal: #3d8b8c;
+      --ink: #e8eef8;
+      --muted: #9aa8bd;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--navy);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    iframe {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: var(--navy);
+      z-index: 1;
+      display: none;
+    }
+
+    iframe.is-on { display: block; }
+
+    .splash {
+      position: relative;
+      z-index: 2;
+      width: min(44rem, 92vw);
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .splash.is-hidden { display: none; }
+
+    .cross {
+      width: 2.4rem;
+      height: 3.6rem;
+      margin: 0 auto 1.25rem;
+      display: block;
+    }
+
+    .kicker {
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: var(--gold);
+      margin: 0 0 0.6rem;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      font-weight: 500;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      margin: 0 auto 1.5rem;
+      max-width: 34rem;
+      line-height: 1.55;
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 1rem;
+    }
+
+    .status {
+      color: var(--gold);
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+      min-height: 1.4em;
+    }
+
+    .status.is-error { color: #f0c4c4; }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--gold-deep);
+      background: transparent;
+      color: var(--gold);
+      font: 600 0.95rem/1.2 system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.4rem;
+      border-radius: 999px;
+      cursor: pointer;
+      display: none;
+    }
+
+    button.is-on { display: inline-block; }
+
+    button:focus-visible,
+    button:hover {
+      outline: 2px solid var(--teal);
+      outline-offset: 3px;
+      background: rgba(232, 201, 106, 0.08);
+    }
+
+    .brand {
+      margin-top: 2rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+  </style>
+</head>
+<body>
+  <iframe
+    id="frame"
+    title="Verse of the Day"
+    referrerpolicy="no-referrer-when-downgrade"
+    allow="fullscreen"
+  ></iframe>
+
+  <main class="splash" id="splash">
+    <svg class="cross" viewBox="0 0 48 72" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="crossGold" x1="24" y1="0" x2="24" y2="72">
+          <stop offset="0%" stop-color="#e8c96a"/>
+          <stop offset="100%" stop-color="#c9a84c"/>
+        </linearGradient>
+      </defs>
+      <path fill="url(#crossGold)" d="M21.2 2.2h5.6c.8 0 1.4.6 1.4 1.4V22h16.2c.8 0 1.4.6 1.4 1.4v5.2c0 .8-.6 1.4-1.4 1.4H28.2V60.4c0 2.4-1.1 5.2-2.8 8.1-.5.8-1.9.8-2.4 0-1.7-2.9-2.8-5.7-2.8-8.1V30H7c-.8 0-1.4-.6-1.4-1.4v-5.2C5.6 22.6 6.2 22 7 22h14.2V3.6c0-.8.6-1.4 1.4-1.4Z"/>
+    </svg>
+    <p class="kicker">WordOnAir Labs</p>
+    <h1>Verse of the Day</h1>
+    <p id="message">Opening the live display from GitHub Pages. This launcher needs Wi-Fi so today’s Scripture can load.</p>
+    <p class="status" id="status" role="status">Connecting…</p>
+    <button type="button" id="retry">Try again</button>
+    <p class="brand">WordOnAir Labs</p>
+  </main>
+
+  <script>
+    (function () {
+      var LIVE = "https://sgeorge83.github.io/tv-pwa-kit/";
+      var splash = document.getElementById("splash");
+      var statusEl = document.getElementById("status");
+      var messageEl = document.getElementById("message");
+      var retry = document.getElementById("retry");
+      var frame = document.getElementById("frame");
+      var preview = /(?:\?|&)preview=1(?:&|$)/.test(location.search);
+
+      function online() {
+        return navigator.onLine !== false;
+      }
+
+      function showOffline() {
+        splash.classList.remove("is-hidden");
+        frame.classList.remove("is-on");
+        frame.removeAttribute("src");
+        messageEl.textContent =
+          "This TV is offline. Connect the display to Wi-Fi, then try again. The live verse is served from GitHub Pages and cannot load from the USB stick alone.";
+        statusEl.textContent = "Waiting for a network connection";
+        statusEl.classList.add("is-error");
+        retry.classList.add("is-on");
+        retry.focus();
+      }
+
+      function launch() {
+        if (preview) {
+          statusEl.textContent = "Preview mode — live redirect is paused";
+          statusEl.classList.remove("is-error");
+          retry.classList.remove("is-on");
+          return;
+        }
+
+        if (!online()) {
+          showOffline();
+          return;
+        }
+
+        statusEl.textContent = "Opening Verse of the Day…";
+        statusEl.classList.remove("is-error");
+        retry.classList.remove("is-on");
+
+        try {
+          frame.src = LIVE;
+          frame.classList.add("is-on");
+        } catch (error) {
+          /* GitHub Pages may block framing; the redirect below still runs. */
+        }
+
+        window.location.replace(LIVE);
+      }
+
+      retry.addEventListener("click", launch);
+      window.addEventListener("online", launch);
+      window.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " " || event.key === "ArrowRight") {
+          if (!retry.classList.contains("is-on")) return;
+          event.preventDefault();
+          launch();
+        }
+      });
+
+      launch();
+    })();
+  </script>
+</body>
+</html>
