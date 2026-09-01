@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#060b14" />
+    <title>Verse of the Day · TV & USB kit</title>
+    <meta
+      name="description"
+      content="USB launcher and Android TV APK packaging kit for the WordOnAir Labs Verse of the Day PWA."
+    />
+  </head>
+  <body>
+    <div class="offline-banner" id="offline-banner" role="status">
+      This computer is offline. The USB launcher and APK still need Wi-Fi on the TV to load today’s verse from GitHub Pages.
+    </div>
+
+    <header class="hero">
+      <p class="kicker">WordOnAir Labs</p>
+      <h1>Put Verse of the Day on a TV</h1>
+      <p class="lede">
+        This kit packages the live GitHub Pages PWA
+        (<a href="https://sgeorge83.github.io/bible-daily-pwa/">sgeorge83.github.io/bible-daily-pwa</a>)
+        for a USB stick and for Android TV / Fire TV. Copy the drop-in PWA files into the existing repo, then pick a launch path.
+      </p>
+      <div class="actions">
+        <a class="btn btn-gold" href="/launch.html?preview=1">Preview USB splash</a>
+        <a class="btn btn-ghost" href="/launch.html">Open live launcher</a>
+        <a class="btn btn-ghost" href="https://github.com/sgeorge83/bible-daily-pwa">Open the PWA repo</a>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="grid">
+        <article class="card">
+          <h2>USB launcher</h2>
+          <p>
+            Copy <span class="path">usb/launch.html</span> to the root of a FAT32 flash drive. Open it from a computer on HDMI, or any browser that can read USB files. Online, it sends the display to GitHub Pages. Offline, it stays on a full-screen fallback until Wi-Fi returns.
+          </p>
+          <p>
+            Most Android TV file managers will not run HTML. Use the APK path for a native TV app.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Android TV APK</h2>
+          <p>
+            Package the live PWA URL with PWABuilder or Bubblewrap, lock landscape and fullscreen, copy <span class="path">VerseOfTheDay.apk</span> onto the same stick, and sideload it from the TV’s file manager.
+          </p>
+          <p>
+            Step-by-step after the PWA files are live:
+            <a href="/docs/ANDROID-TV-APK.md">docs/ANDROID-TV-APK.md</a>.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>USB launcher preview</h2>
+      <p class="lede">
+        Preview mode pauses the redirect so you can see the splash. The file on the stick has no query string and will open the live PWA when Wi-Fi is up.
+      </p>
+      <div class="preview-wrap">
+        <iframe
+          id="launcher-preview"
+          title="USB launcher splash"
+          src="/launch.html?preview=1"
+        ></iframe>
+        <p class="preview-error" id="preview-error">
+          The launcher preview did not load. Use “Preview USB splash” above, or open <span class="path">usb/launch.html</span> from the repo.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Copy into the GitHub Pages repo</h2>
+      <ol>
+        <li>Copy <span class="path">pwa/manifest.json</span> over <span class="path">manifest.json</span>.</li>
+        <li>Copy <span class="path">pwa/sw.js</span> and <span class="path">pwa/sw-register.js</span> into the repo root.</li>
+        <li>
+          In <span class="path">index.html</span>, add this before <span class="path">&lt;/body&gt;</span>:
+          <pre>&lt;script src="./sw-register.js" defer&gt;&lt;/script&gt;</pre>
+        </li>
+        <li>Push to <span class="path">main</span> so GitHub Pages publishes the service worker.</li>
+        <li>Then generate the APK from the live URL. See <a href="/docs/ANDROID-TV-APK.md">docs/ANDROID-TV-APK.md</a>.</li>
+      </ol>
+    </section>
+
+    <footer class="section">
+      Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), copyright © Crossway.
+      A project of WordOnAir Labs.
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
